@@ -73,7 +73,7 @@
       </div>
     </div>
     <div class="nav__mobile" id="mobileMenu" role="menu">
-      <a href="/mejialuna/la-firma/">El Despacho</a>
+      <a href="/mejialuna/la-firma/">La Firma</a>
       <a href="/mejialuna/litigio-mercantil/">Litigio Mercantil</a>
       <a href="/mejialuna/litigio-penal/">Litigio Penal</a>
       <a href="/mejialuna/equipo/">Equipo</a>
@@ -320,6 +320,20 @@
     });
     mobileMenu.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => { mobileMenu.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); });
+    });
+    // ── Nav dropdown click/touch toggle ────────────
+    document.querySelectorAll('.nav__dropdown > a').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        var parent = this.parentElement;
+        var isOpen = parent.classList.contains('open');
+        document.querySelectorAll('.nav__dropdown').forEach(function(d) { d.classList.remove('open'); });
+        if (!isOpen) { e.preventDefault(); parent.classList.add('open'); }
+      });
+    });
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav__dropdown')) {
+        document.querySelectorAll('.nav__dropdown').forEach(function(d) { d.classList.remove('open'); });
+      }
     });
     // ── ScrollStack — Servicios ─────────────────────
     (function() {

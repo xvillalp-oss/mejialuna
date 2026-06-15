@@ -556,6 +556,21 @@
   (function () {
     'use strict';
 
+    /* ── Nav dropdown: click/touch toggle ──────────── */
+    document.querySelectorAll('.nav__dropdown > a').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        var parent = this.parentElement;
+        var isOpen = parent.classList.contains('open');
+        document.querySelectorAll('.nav__dropdown').forEach(function(d) { d.classList.remove('open'); });
+        if (!isOpen) { e.preventDefault(); parent.classList.add('open'); }
+      });
+    });
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav__dropdown')) {
+        document.querySelectorAll('.nav__dropdown').forEach(function(d) { d.classList.remove('open'); });
+      }
+    });
+
     /* ── Nav: transparent → dark on scroll ─────────── */
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', function () {

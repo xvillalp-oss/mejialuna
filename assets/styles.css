@@ -138,7 +138,9 @@ img { display: block; max-width: 100%; }
   list-style: none;
   backdrop-filter: blur(16px);
 }
-.nav__dropdown:hover .nav__dropdown-menu { display: block; }
+.nav__dropdown:hover .nav__dropdown-menu,
+.nav__dropdown:focus-within .nav__dropdown-menu,
+.nav__dropdown.open .nav__dropdown-menu { display: block; }
 .nav__dropdown-menu li a {
   display: block; padding: 11px 22px;
   font-size: 10px; letter-spacing: 0.16em;
