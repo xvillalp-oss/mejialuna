@@ -804,6 +804,12 @@
   transition: background 0.2s, color 0.2s;
 }
 .cta-agenda__btn:hover { background: var(--gold); color: var(--white); }
+.cta-agenda__btn--outline {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.cta-agenda__btn--outline:hover { background: var(--gold); color: var(--white); border-color: var(--gold); }
 .cta-agenda__btn-sec {
   font-family: var(--font-sans);
   font-size: 11px;
