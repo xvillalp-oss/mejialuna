@@ -275,6 +275,19 @@ img { display: block; max-width: 100%; }
   position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(135deg, rgba(12,13,14,.92) 0%, rgba(12,13,14,.68) 50%, rgba(28,29,31,.85) 100%);
 }
+/* ── Hero video background (inner pages) ─────────── */
+.hero__video-bg {
+  position: absolute; inset: 0; z-index: 0;
+}
+.hero__video-bg video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; opacity: 0.6;
+}
+.hero__overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(135deg, rgba(12,13,14,.72) 0%, rgba(12,13,14,.45) 50%, rgba(28,29,31,.65) 100%);
+}
 .hero__lines {
   position: absolute; inset: 0; overflow: hidden; z-index: 1;
 }
