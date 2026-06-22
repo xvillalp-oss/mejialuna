@@ -670,8 +670,18 @@ img { display: block; max-width: 100%; }
 /* ── CTA Banner ────────────────────────────────── */
 .cta-banner {
   background: var(--wine);
+  background-image: url('../assets/images/fondo-cta.jpg');
+  background-size: cover;
+  background-position: center;
   padding: clamp(48px, 6vw, 80px) 0;
+  position: relative;
 }
+.cta-banner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(80,11,14,0.72);
+}
+.cta-banner .container { position: relative; z-index: 1; }
 .cta-banner__inner {
   display: flex; align-items: center; justify-content: space-between; gap: 40px;
   flex-wrap: wrap;
@@ -775,6 +785,12 @@ img { display: block; max-width: 100%; }
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-serif); font-size: 22px; font-weight: 700;
   color: var(--wine); margin-bottom: 24px;
+}
+.attorney-card__photo {
+  width: 120px; height: 120px; border-radius: 50%;
+  object-fit: cover; object-position: top center;
+  margin-bottom: 24px; display: block;
+  border: 3px solid rgba(80,11,14,.15);
 }
 .attorney-card__name {
   font-family: var(--font-serif);
