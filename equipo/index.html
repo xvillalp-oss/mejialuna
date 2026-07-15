@@ -134,7 +134,7 @@
               Egresado del Tecnológico de Monterrey, campus Santa Fe. Más de 7 años litigando con enfoque en materia mercantil. Se ha preparado con Diplomados en Juicios Orales Mercantiles, en Litigación Oral y en Arbitraje Comercial Internacional, además de una Especialidad en Proceso Penal por el INACIPE — para ofrecer a cada cliente el espectro completo de soluciones posibles.
             </p>
             <div class="attorney-card__contact">
-              <a href="mailto:r@mejialuna.mx">
+              <a href="#" data-mail="1">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                 r@mejialuna.mx
               </a>
@@ -193,7 +193,7 @@
           <div class="footer__logo">Mejía Luna</div>
           <div class="footer__logo-sub">Abogados · S.C.</div>
           <p class="footer__tagline">Despacho de abogados litigantes especializado en materias mercantil y penal. Problema resuelto.</p>
-          <p class="footer__nap" style="margin-top:16px;">Av. Cordillera de los Andes 210, PH2<br>Lomas de Chapultepec III Sección<br>Miguel Hidalgo, C.P. 11000, CDMX<br><a href="tel:5648527428" style="color:rgba(255,255,255,.4);">56 4852 7428</a> · <a href="mailto:r@mejialuna.mx" style="color:rgba(255,255,255,.4);">r@mejialuna.mx</a></p>
+          <p class="footer__nap" style="margin-top:16px;">Av. Cordillera de los Andes 210, PH2<br>Lomas de Chapultepec III Sección<br>Miguel Hidalgo, C.P. 11000, CDMX<br><a href="tel:5648527428" style="color:rgba(255,255,255,.4);">56 4852 7428</a> · <a href="#" data-mail="1" style="color:rgba(255,255,255,.4);">r<!-- -->@<!-- -->mejialuna.mx</a></p>
         </div>
         <div class="footer__col">
           <h4>Servicios</h4>
@@ -256,5 +256,8 @@
       reveals.forEach(el => io.observe(el));
     } else { reveals.forEach(el => el.classList.add('visible')); }
   </script>
+<script>
+(function(){var p=['r','mejialuna','mx'];var e=p[0]+'@'+p[1]+'.'+p[2];document.querySelectorAll('[data-mail]').forEach(function(a){a.href='mailto:'+e;});})();
+</script>
 </body>
 </html>

@@ -101,7 +101,7 @@
             <a href="tel:5648527428" class="cta-agenda__btn cta-agenda__btn--outline">
               56 4852 7428 →
             </a>
-            <a href="mailto:r@mejialuna.mx" class="cta-agenda__btn cta-agenda__btn--outline">
+            <a href="#" data-mail="1" class="cta-agenda__btn cta-agenda__btn--outline">
               r@mejialuna.mx →
             </a>
           </div>
@@ -130,7 +130,7 @@
             </li>
             <li class="agenda-contact__item">
               <svg class="agenda-contact__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              <a href="mailto:r@mejialuna.mx">r@mejialuna.mx</a>
+              <a href="#" data-mail="1">r<!-- -->@<!-- -->mejialuna.mx</a>
             </li>
             <li class="agenda-contact__item">
               <svg class="agenda-contact__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="17"/><line x1="9.5" y1="14.5" x2="14.5" y2="14.5"/></svg>
@@ -182,7 +182,7 @@
           <div class="footer__logo">Mejía Luna</div>
           <div class="footer__logo-sub">Abogados · S.C.</div>
           <p class="footer__tagline">Despacho de abogados litigantes especializado en materias mercantil y penal. Problema resuelto.</p>
-          <p class="footer__nap" style="margin-top:16px;">Av. Cordillera de los Andes 210, PH2<br>Lomas de Chapultepec III Sección<br>Miguel Hidalgo, C.P. 11000, CDMX<br><a href="tel:5648527428" style="color:rgba(255,255,255,.4);">56 4852 7428</a> · <a href="mailto:r@mejialuna.mx" style="color:rgba(255,255,255,.4);">r@mejialuna.mx</a></p>
+          <p class="footer__nap" style="margin-top:16px;">Av. Cordillera de los Andes 210, PH2<br>Lomas de Chapultepec III Sección<br>Miguel Hidalgo, C.P. 11000, CDMX<br><a href="tel:5648527428" style="color:rgba(255,255,255,.4);">56 4852 7428</a> · <a href="#" data-mail="1" style="color:rgba(255,255,255,.4);">r<!-- -->@<!-- -->mejialuna.mx</a></p>
         </div>
         <div class="footer__col">
           <h4>Servicios</h4>
@@ -246,5 +246,8 @@
     } else { reveals.forEach(el => el.classList.add('visible')); }
 
   </script>
+<script>
+(function(){var p=['r','mejialuna','mx'];var e=p[0]+'@'+p[1]+'.'+p[2];document.querySelectorAll('[data-mail]').forEach(function(a){a.href='mailto:'+e;});})();
+</script>
 </body>
 </html>
