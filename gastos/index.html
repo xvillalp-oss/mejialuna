@@ -30,9 +30,16 @@
   }
   body{background:var(--cream);color:var(--ink);font-family:var(--mono);font-size:13px;min-height:100vh;}
 
-  #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--ink);position:relative;overflow:hidden;}
+  #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--ink);position:relative;overflow:hidden;gap:40px;padding:40px 20px;flex-wrap:wrap;}
   #login-screen::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(196,146,42,.03) 40px,rgba(196,146,42,.03) 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(196,146,42,.03) 40px,rgba(196,146,42,.03) 41px);}
-  .login-box{background:var(--white);width:360px;padding:48px 40px;border-top:3px solid var(--gold);position:relative;animation:fadeUp .5s ease;}
+  .login-box{background:var(--white);width:360px;padding:48px 40px;border-top:3px solid var(--gold);position:relative;animation:fadeUp .5s ease;z-index:2;}
+  .contact-box{background:var(--white);width:360px;padding:48px 40px;border-top:3px solid var(--gold);position:relative;animation:fadeUp .5s ease .1s backwards;z-index:2;}
+  .contact-box h3{font-family:var(--serif);font-size:20px;font-weight:600;margin-bottom:4px;color:var(--ink);}
+  .contact-box p{font-size:11px;color:var(--stone);margin-bottom:24px;line-height:1.5;}
+  .contact-box label{display:block;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--stone);margin-bottom:7px;}
+  .contact-box input, .contact-box textarea{width:100%;padding:10px 13px;background:var(--cream);border:1px solid var(--stone-l);font-family:var(--mono);font-size:13px;color:var(--ink);outline:none;margin-bottom:18px;transition:border-color .2s;}
+  .contact-box input:focus, .contact-box textarea:focus{border-color:var(--gold);background:var(--white);}
+  .contact-box textarea{min-height:70px;resize:vertical;}
   .login-logo{font-family:var(--serif);font-size:28px;font-weight:600;margin-bottom:4px;}
   .login-logo span{color:var(--gold);}
   .login-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--stone);margin-bottom:32px;}
@@ -182,6 +189,27 @@
     <input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
     <button class="btn-primary" onclick="doLogin()">Ingresar</button>
     <div class="login-error" id="login-error">Usuario o contraseña incorrectos.</div>
+  </div>
+
+  <div class="contact-box">
+    <h3>¿Necesitas ayuda?</h3>
+    <p>Ponte en contacto con nuestro equipo para consultas, soporte o más información sobre cómo gestionar tus gastos de litigio.</p>
+
+    <label>Nombre <span style="color:var(--burgundy)">*</span></label>
+    <input type="text" id="c-nombre" placeholder="Tu nombre completo"/>
+
+    <label>Email <span style="color:var(--burgundy)">*</span></label>
+    <input type="email" id="c-email" placeholder="tu@email.com"/>
+
+    <label>Teléfono</label>
+    <input type="tel" id="c-tel" placeholder="+52 (555) 1234-5678"/>
+
+    <label>Mensaje <span style="color:var(--burgundy)">*</span></label>
+    <textarea id="c-mensaje" placeholder="Cuéntanos cómo podemos ayudarte…"></textarea>
+
+    <button class="btn-primary" onclick="enviarContacto()">Enviar mensaje</button>
+    <div class="login-error" id="contact-error" style="margin-top:14px;"></div>
+    <div class="toast" id="contact-toast" style="margin-top:14px;background:var(--green-bg);border-left:2px solid var(--green);color:var(--green);display:none;">✓ Mensaje enviado correctamente.</div>
   </div>
 </div>
 
@@ -549,6 +577,53 @@ function doLogout() {
   document.getElementById('login-error').style.display='none';
   ['tab-admin','tab-cob','tab-mis','tab-clientes'].forEach(id=>document.getElementById(id).classList.add('hidden'));
   showTab('form', document.querySelector('.tab'));
+}
+
+// ─── CONTACTO ─────────────────────────────────────────────────────────────────
+function enviarContacto() {
+  const nombre = document.getElementById('c-nombre').value.trim();
+  const email = document.getElementById('c-email').value.trim();
+  const tel = document.getElementById('c-tel').value.trim();
+  const mensaje = document.getElementById('c-mensaje').value.trim();
+
+  const contactError = document.getElementById('contact-error');
+  const contactToast = document.getElementById('contact-toast');
+  contactError.style.display='none';
+  contactToast.style.display='none';
+
+  if (!nombre || !email || !mensaje) {
+    contactError.textContent = 'Por favor completa los campos requeridos.';
+    contactError.style.display='block';
+    return;
+  }
+
+  if (!email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
+    contactError.textContent = 'Email inválido.';
+    contactError.style.display='block';
+    return;
+  }
+
+  // Enviar a Supabase (tabla de contactos)
+  const contactData = {
+    nombre,
+    email,
+    tel: tel || null,
+    mensaje,
+    fecha: new Date().toISOString()
+  };
+
+  supabase.from('contactos').insert([contactData]).then(() => {
+    contactToast.style.display='flex';
+    document.getElementById('c-nombre').value='';
+    document.getElementById('c-email').value='';
+    document.getElementById('c-tel').value='';
+    document.getElementById('c-mensaje').value='';
+    setTimeout(() => { contactToast.style.display='none'; }, 4000);
+  }).catch(err => {
+    console.error('Error enviando contacto:', err);
+    contactError.textContent = 'Error al enviar. Intenta más tarde.';
+    contactError.style.display='block';
+  });
 }
 
 // ─── TABS ─────────────────────────────────────────────────────────────────────
