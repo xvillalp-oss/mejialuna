@@ -30,16 +30,9 @@
   }
   body{background:var(--cream);color:var(--ink);font-family:var(--mono);font-size:13px;min-height:100vh;}
 
-  #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--ink);position:relative;overflow:hidden;gap:40px;padding:40px 20px;flex-wrap:wrap;}
+  #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--ink);position:relative;overflow:hidden;}
   #login-screen::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(196,146,42,.03) 40px,rgba(196,146,42,.03) 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(196,146,42,.03) 40px,rgba(196,146,42,.03) 41px);}
-  .login-box{background:var(--white);width:360px;padding:48px 40px;border-top:3px solid var(--gold);position:relative;animation:fadeUp .5s ease;z-index:2;}
-  .contact-box{background:var(--white);width:360px;padding:48px 40px;border-top:3px solid var(--gold);position:relative;animation:fadeUp .5s ease .1s backwards;z-index:2;}
-  .contact-box h3{font-family:var(--serif);font-size:20px;font-weight:600;margin-bottom:4px;color:var(--ink);}
-  .contact-box p{font-size:11px;color:var(--stone);margin-bottom:24px;line-height:1.5;}
-  .contact-box label{display:block;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--stone);margin-bottom:7px;}
-  .contact-box input, .contact-box textarea{width:100%;padding:10px 13px;background:var(--cream);border:1px solid var(--stone-l);font-family:var(--mono);font-size:13px;color:var(--ink);outline:none;margin-bottom:18px;transition:border-color .2s;}
-  .contact-box input:focus, .contact-box textarea:focus{border-color:var(--gold);background:var(--white);}
-  .contact-box textarea{min-height:70px;resize:vertical;}
+  .login-box{background:var(--white);width:360px;padding:48px 40px;border-top:3px solid var(--gold);position:relative;animation:fadeUp .5s ease;}
   .login-logo{font-family:var(--serif);font-size:28px;font-weight:600;margin-bottom:4px;}
   .login-logo span{color:var(--gold);}
   .login-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--stone);margin-bottom:32px;}
@@ -168,6 +161,12 @@
   .empty-state{text-align:center;padding:60px 20px;color:var(--stone);font-size:12px;}
   @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
+  .multi-row{display:grid;grid-template-columns:110px 1fr 100px 1fr 32px;gap:6px;align-items:start;margin-bottom:6px;}
+  .multi-row input,.multi-row select{padding:7px 10px;background:var(--cream);border:1px solid var(--stone-l);font-family:var(--mono);font-size:12px;color:var(--ink);outline:none;width:100%;}
+  .multi-row input:focus,.multi-row select:focus{border-color:var(--gold);background:var(--white);}
+  .multi-row .btn-del{padding:6px 10px;height:100%;}
+  .multi-add-btn{width:100%;padding:9px;background:transparent;border:1px dashed var(--stone-l);font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--stone);cursor:pointer;margin-top:4px;transition:all .2s;}
+  .multi-add-btn:hover{border-color:var(--gold);color:var(--gold);}
   @media(max-width:600px){
     .main{padding:24px 16px 80px;}
     .card{padding:24px 18px;}
@@ -189,27 +188,6 @@
     <input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
     <button class="btn-primary" onclick="doLogin()">Ingresar</button>
     <div class="login-error" id="login-error">Usuario o contraseña incorrectos.</div>
-  </div>
-
-  <div class="contact-box">
-    <h3>¿Necesitas ayuda?</h3>
-    <p>Ponte en contacto con nuestro equipo para consultas, soporte o más información sobre cómo gestionar tus gastos de litigio.</p>
-
-    <label>Nombre <span style="color:var(--burgundy)">*</span></label>
-    <input type="text" id="c-nombre" placeholder="Tu nombre completo"/>
-
-    <label>Email <span style="color:var(--burgundy)">*</span></label>
-    <input type="email" id="c-email" placeholder="tu@email.com"/>
-
-    <label>Teléfono</label>
-    <input type="tel" id="c-tel" placeholder="+52 (555) 1234-5678"/>
-
-    <label>Mensaje <span style="color:var(--burgundy)">*</span></label>
-    <textarea id="c-mensaje" placeholder="Cuéntanos cómo podemos ayudarte…"></textarea>
-
-    <button class="btn-primary" onclick="enviarContacto()">Enviar mensaje</button>
-    <div class="login-error" id="contact-error" style="margin-top:14px;"></div>
-    <div class="toast" id="contact-toast" style="margin-top:14px;background:var(--green-bg);border-left:2px solid var(--green);color:var(--green);display:none;">✓ Mensaje enviado correctamente.</div>
   </div>
 </div>
 
@@ -290,11 +268,14 @@
           </div>
           <div class="fg full">
             <label>Descripción / Tarea <span class="req">*</span></label>
-            <div style="background:var(--cream);border-left:3px solid var(--gold);padding:10px 14px;margin-bottom:10px;font-size:11px;line-height:1.6;color:var(--ink)">
-              <strong style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--stone);display:block;margin-bottom:6px">Cómo describir el gasto</strong>
-              Explica <strong>qué</strong> se hizo, <strong>para qué</strong> y <strong>dónde</strong>: tipo de diligencia, autoridad o lugar, y el asunto. Cuida la ortografía, los acentos y el uso correcto de mayúsculas (nombres propios, instituciones) y minúsculas.<br>
-              <span style="color:var(--green)">✓ Correcto:</span> <em>"Pago a corresponsal por presentación de demanda inicial ante el Juzgado Tercero de Distrito en Puebla."</em><br>
-              <span style="color:var(--burgundy)">✗ Evita:</span> <em>"pago corresponsal puebla"</em>
+            <div style="background:var(--cream);border-left:3px solid var(--gold);padding:12px 16px;margin-bottom:10px;font-size:11px;line-height:1.7;color:var(--ink)">
+              <strong style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--stone);display:block;margin-bottom:8px">📝 Cómo describir el gasto</strong>
+              Responde: <strong>¿qué se hizo?</strong> · <strong>¿para qué?</strong> · <strong>¿dónde?</strong><br>
+              Incluye: tipo de diligencia, autoridad o lugar, nombre del asunto o cliente si aplica.<br>
+              <span style="color:var(--stone);font-size:10px">Cuida ortografía, acentos y mayúsculas (nombres propios e instituciones van con mayúscula inicial).</span><br><br>
+              <span style="color:var(--green);font-weight:500">✓ Bien:</span> <em>"Pago a corresponsal por presentación de escrito inicial ante Juzgado Tercero de Distrito en Puebla, exp. Hazak."</em><br>
+              <span style="color:#856404;font-weight:500">✓ Bien:</span> <em>"Copias certificadas del expediente para presentación de amparo en Tribunal Colegiado de Circuito."</em><br>
+              <span style="color:var(--burgundy);font-weight:500">✗ Evitar:</span> <em>"pago corresponsal"</em> · <em>"copias"</em> · <em>"gasolina aremi"</em>
             </div>
             <textarea id="f-desc" oninput="actualizarContadorPalabras()" placeholder="Mínimo 12 palabras…"></textarea>
             <div class="field-hint" id="desc-counter" style="margin-top:4px">0 palabras</div>
@@ -304,11 +285,32 @@
         <div class="form-footer">
           <button class="btn-submit" id="btn-guardar" onclick="registrar()">Guardar gasto</button>
           <button class="btn-ghost" onclick="limpiar()">Limpiar</button>
-          <label style="display:flex;align-items:center;gap:6px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--stone);cursor:pointer;margin-left:6px">
-            <input type="checkbox" id="f-mantener-cliente" style="margin:0"/>
-            Agregar varios al mismo cliente
-          </label>
+          <button class="btn-ghost" onclick="abrirMultiple()" style="border-color:var(--gold);color:var(--gold)">+ Agregar varios</button>
           <div class="toast" id="toast">✓ Gasto registrado correctamente.</div>
+        </div>
+
+        <!-- Panel de múltiples gastos -->
+        <div id="multi-panel" class="hidden" style="margin-top:24px;border-top:2px solid var(--gold);padding-top:20px">
+          <div style="font-family:var(--serif);font-size:18px;font-weight:600;margin-bottom:4px">Registrar varios gastos</div>
+          <div style="font-size:11px;color:var(--stone);margin-bottom:18px">Para el mismo cliente. Cada fila es un gasto independiente.</div>
+          <div class="fg" style="margin-bottom:16px">
+            <label>Cliente <span class="req">*</span></label>
+            <select id="multi-cliente"><option value="">— Selecciona un cliente —</option></select>
+          </div>
+          <div style="display:grid;grid-template-columns:110px 1fr 100px 1fr 32px;gap:6px;margin-bottom:6px">
+            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--stone)">Fecha</div>
+            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--stone)">Categoría</div>
+            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--stone)">Importe</div>
+            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--stone)">Descripción</div>
+            <div></div>
+          </div>
+          <div id="multi-rows"></div>
+          <button class="multi-add-btn" onclick="multiAgregarFila()">+ Nueva fila</button>
+          <div class="form-footer" style="margin-top:16px">
+            <button class="btn-submit" id="btn-multi-guardar" onclick="multiGuardar()">Guardar todos los gastos</button>
+            <button class="btn-ghost" onclick="cerrarMultiple()">Cancelar</button>
+            <div class="toast" id="toast-multi">✓ Gastos registrados correctamente.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -577,53 +579,6 @@ function doLogout() {
   document.getElementById('login-error').style.display='none';
   ['tab-admin','tab-cob','tab-mis','tab-clientes'].forEach(id=>document.getElementById(id).classList.add('hidden'));
   showTab('form', document.querySelector('.tab'));
-}
-
-// ─── CONTACTO ─────────────────────────────────────────────────────────────────
-function enviarContacto() {
-  const nombre = document.getElementById('c-nombre').value.trim();
-  const email = document.getElementById('c-email').value.trim();
-  const tel = document.getElementById('c-tel').value.trim();
-  const mensaje = document.getElementById('c-mensaje').value.trim();
-
-  const contactError = document.getElementById('contact-error');
-  const contactToast = document.getElementById('contact-toast');
-  contactError.style.display='none';
-  contactToast.style.display='none';
-
-  if (!nombre || !email || !mensaje) {
-    contactError.textContent = 'Por favor completa los campos requeridos.';
-    contactError.style.display='block';
-    return;
-  }
-
-  if (!email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
-    contactError.textContent = 'Email inválido.';
-    contactError.style.display='block';
-    return;
-  }
-
-  // Enviar a Supabase (tabla de contactos)
-  const contactData = {
-    nombre,
-    email,
-    tel: tel || null,
-    mensaje,
-    fecha: new Date().toISOString()
-  };
-
-  supabase.from('contactos').insert([contactData]).then(() => {
-    contactToast.style.display='flex';
-    document.getElementById('c-nombre').value='';
-    document.getElementById('c-email').value='';
-    document.getElementById('c-tel').value='';
-    document.getElementById('c-mensaje').value='';
-    setTimeout(() => { contactToast.style.display='none'; }, 4000);
-  }).catch(err => {
-    console.error('Error enviando contacto:', err);
-    contactError.textContent = 'Error al enviar. Intenta más tarde.';
-    contactError.style.display='block';
-  });
 }
 
 // ─── TABS ─────────────────────────────────────────────────────────────────────
@@ -925,7 +880,7 @@ function renderAdmin() {
   let html='';
   Object.keys(byMonth).sort().forEach(mes=>{
     const rows=byMonth[mes]; const sub=rows.reduce((s,g)=>s+parseFloat(g.importe||0),0);
-    html+=`<div style="margin-bottom:24px"><table><thead><tr style="background:var(--paper)"><th colspan="8" style="font-family:var(--serif);font-style:italic;font-size:14px;color:var(--stone);font-weight:400;letter-spacing:0;text-transform:none;padding:7px 13px">${fmtMes(mes)} &nbsp;·&nbsp; $${fmt(sub)}</th></tr><tr><th>Fecha</th><th>Cliente</th><th>Categoría</th><th>Descripción</th><th>Usuario</th><th style="text-align:right">Importe</th><th></th></tr></thead><tbody>`;
+    html+=`<div style="margin-bottom:24px"><table><thead><tr style="background:var(--ink)"><th colspan="8" style="font-family:var(--serif);font-style:italic;font-size:14px;color:var(--gold-l);font-weight:400;letter-spacing:0;text-transform:none;padding:9px 13px">${fmtMes(mes)} &nbsp;·&nbsp; $${fmt(sub)}</th></tr><tr><th>Fecha</th><th>Cliente</th><th>Categoría</th><th>Descripción</th><th>Usuario</th><th style="text-align:right">Importe</th><th></th></tr></thead><tbody>`;
     rows.forEach(g=>{
       const ck=(g.categoria||'').replace(/\s/g,'_');
       // Buscar en lista completa para detectar si tiene historial (modificaciones)
@@ -1173,7 +1128,13 @@ async function confirmarEmail() {
 
   // Preparar datos: gastos de TODOS los meses seleccionados
   const gastos = allGastos.filter(g => g.cliente === emailCliente && mesesChecked.includes((g.fecha||'').substring(0,7)));
-  const total  = gastos.reduce((s,g) => s + parseFloat(g.importe||0), 0);
+  const subtotalBruto = gastos.reduce((s,g) => s + parseFloat(g.importe||0), 0);
+  // Aplicar descuentos de los meses incluidos
+  const totalDescuentoEmail = mesesChecked.reduce((s,m) => {
+    const p = allPagos.find(p=>p.cliente===emailCliente&&p.mes===m);
+    return s + parseFloat(p?.descuento||0);
+  }, 0);
+  const total = Math.max(0, subtotalBruto - totalDescuentoEmail); // subtotalNeto que va al email
 
   try {
     const r = await fetch(`${SB_URL}/functions/v1/enviar-email`, {
@@ -1469,8 +1430,25 @@ function exportarPDF(mesesSeleccionados) {
     doc.setTextColor(122,31,31);doc.text('Motivo',M,66);
     doc.setFont('helvetica','normal');doc.setTextColor(26,20,16);doc.text('Procedimientos judiciales — '+cliente,M,71);
     const subtotal = rows.reduce((s,g)=>s+parseFloat(g.importe||0),0);
-    const iva = subtotal * 0.16;
-    const total = subtotal + iva;
+    // Calcular descuentos aplicados para este cliente en los meses incluidos
+    const mesesEnRows = [...new Set(rows.map(g=>(g.fecha||'').substring(0,7)))];
+    const totalDescuento = mesesEnRows.reduce((s,m)=>{
+      const p = allPagos.find(p=>p.cliente===cliente&&p.mes===m);
+      return s + parseFloat(p?.descuento||0);
+    }, 0);
+    const subtotalNeto = Math.max(0, subtotal - totalDescuento);
+    const iva = subtotalNeto * 0.16;
+    const total = subtotalNeto + iva;
+
+    // Pie de tabla con descuento (si aplica)
+    const footRows = [];
+    footRows.push(['','',{content:'Subtotal',styles:{halign:'right'}},{content:'$'+fmt(subtotal),styles:{halign:'right'}}]);
+    if (totalDescuento > 0) {
+      footRows.push(['','',{content:'Descuento',styles:{halign:'right',textColor:[45,90,61]}},{content:'-$'+fmt(totalDescuento),styles:{halign:'right',textColor:[45,90,61]}}]);
+      footRows.push(['','',{content:'Subtotal neto',styles:{halign:'right'}},{content:'$'+fmt(subtotalNeto),styles:{halign:'right'}}]);
+    }
+    footRows.push(['','',{content:'IVA (16%)',styles:{halign:'right'}},{content:'$'+fmt(iva),styles:{halign:'right'}}]);
+    footRows.push(['','',{content:'TOTAL',styles:{fontStyle:'bold',halign:'right'}},{content:'$'+fmt(total),styles:{fontStyle:'bold',halign:'right',textColor:[122,31,31]}}]);
 
     doc.autoTable({startY:78,head:[['Fecha','Categoría','Tarea / Descripción','Importe']],
       body:rows.map(g=>[fmtF(g.fecha),g.categoria,g.descripcion,'$'+fmt(parseFloat(g.importe||0))]),
@@ -1478,11 +1456,7 @@ function exportarPDF(mesesSeleccionados) {
       headStyles:{fillColor:[26,20,16],textColor:[255,255,255],fontStyle:'bold',fontSize:7.5},
       alternateRowStyles:{fillColor:[247,243,238]},
       columnStyles:{0:{cellWidth:22},1:{cellWidth:28},2:{cellWidth:'auto'},3:{cellWidth:24,halign:'right'}},
-      foot:[
-        ['','',{content:'Subtotal',styles:{halign:'right'}},{content:'$'+fmt(subtotal),styles:{halign:'right'}}],
-        ['','',{content:'IVA (16%)',styles:{halign:'right'}},{content:'$'+fmt(iva),styles:{halign:'right'}}],
-        ['','',{content:'TOTAL',styles:{fontStyle:'bold',halign:'right'}},{content:'$'+fmt(total),styles:{fontStyle:'bold',halign:'right',textColor:[122,31,31]}}]
-      ],
+      foot: footRows,
       footStyles:{fillColor:[237,232,224]}});
 
     // ── Sección de pago (dos columnas) ──────────────────────────────────────
@@ -1659,6 +1633,110 @@ async function guardarCliente(id, btn) {
       setTimeout(()=>{ btn.textContent = 'guardar'; btn.style.background = ''; btn.style.color = ''; btn.style.borderColor = ''; }, 1500);
     }
   } catch(e) { alert('Error: ' + e.message); }
+}
+
+// ─── MÚLTIPLES GASTOS ────────────────────────────────────────────────────────
+const CATS = ['Transporte','Gasolina','Impresiones','Copias','Estacionamiento','Corresponsalía','Paquetería','Gratificación','Otro'];
+
+function abrirMultiple() {
+  document.getElementById('multi-panel').classList.remove('hidden');
+  document.getElementById('multi-panel').scrollIntoView({behavior:'smooth', block:'start'});
+  // Poblar selector de cliente
+  const sel = document.getElementById('multi-cliente');
+  const clientesActivos = allClientes.filter(cl=>cl.activo!==false).map(cl=>cl.nombre);
+  sel.innerHTML = '<option value="">— Selecciona un cliente —</option>';
+  clientesActivos.forEach(n=>{ const o=document.createElement('option'); o.value=o.textContent=n; sel.appendChild(o); });
+  // Iniciar con 2 filas vacías
+  document.getElementById('multi-rows').innerHTML = '';
+  multiAgregarFila();
+  multiAgregarFila();
+}
+
+function cerrarMultiple() {
+  document.getElementById('multi-panel').classList.add('hidden');
+  document.getElementById('multi-rows').innerHTML = '';
+  document.getElementById('multi-cliente').value = '';
+}
+
+let multiRowCount = 0;
+function multiAgregarFila() {
+  multiRowCount++;
+  const id = multiRowCount;
+  const div = document.createElement('div');
+  div.className = 'multi-row';
+  div.id = 'multi-row-' + id;
+  const catOpts = CATS.map(cat=>`<option>${cat}</option>`).join('');
+  div.innerHTML = `
+    <input type="date" id="mf-fecha-${id}" value="${hoy()}" />
+    <select id="mf-cat-${id}"><option value="">— Categoría —</option>${catOpts}</select>
+    <input type="number" id="mf-imp-${id}" placeholder="$0.00" min="0" step="0.01"/>
+    <input type="text" id="mf-desc-${id}" placeholder="Descripción (mín. 12 palabras)…"/>
+    <button class="btn-del" onclick="multiEliminarFila(${id})">×</button>`;
+  document.getElementById('multi-rows').appendChild(div);
+}
+
+function multiEliminarFila(id) {
+  const el = document.getElementById('multi-row-' + id);
+  if (el) el.remove();
+}
+
+async function multiGuardar() {
+  const cliente = document.getElementById('multi-cliente').value;
+  if (!cliente) { alert('Selecciona un cliente.'); return; }
+
+  const rows = document.getElementById('multi-rows').querySelectorAll('.multi-row');
+  if (!rows.length) { alert('Agrega al menos un gasto.'); return; }
+
+  // Validar todas las filas
+  const gastos = [];
+  let errores = [];
+  rows.forEach((row, i) => {
+    const id = row.id.replace('multi-row-','');
+    const fecha = document.getElementById(`mf-fecha-${id}`)?.value;
+    const cat   = document.getElementById(`mf-cat-${id}`)?.value;
+    const imp   = parseFloat(document.getElementById(`mf-imp-${id}`)?.value);
+    const desc  = document.getElementById(`mf-desc-${id}`)?.value?.trim();
+    const palabras = desc ? desc.split(/\s+/).filter(w=>w.length>0).length : 0;
+
+    if (!fecha) errores.push(`Fila ${i+1}: falta la fecha.`);
+    else if (!cat) errores.push(`Fila ${i+1}: selecciona una categoría.`);
+    else if (!imp || imp <= 0) errores.push(`Fila ${i+1}: el importe debe ser mayor a 0.`);
+    else if (!desc || palabras < 12) errores.push(`Fila ${i+1}: la descripción necesita al menos 12 palabras (tiene ${palabras}).`);
+    else gastos.push({ fecha, cat, imp, desc });
+  });
+
+  if (errores.length) { alert(errores.join('\n')); return; }
+
+  const btn = document.getElementById('btn-multi-guardar');
+  btn.disabled = true; btn.textContent = 'Guardando…';
+
+  try {
+    for (let i = 0; i < gastos.length; i++) {
+      const g = gastos[i];
+      const gasto = {
+        id: Date.now() + i,
+        fecha: g.fecha, autor: session.nombre, cliente,
+        categoria: g.cat, importe: g.imp, descripcion: g.desc,
+        timestamp: new Date().toISOString(),
+        modificado_de: '', motivo_modificacion: '', eliminado: ''
+      };
+      await sb('gastos', 'POST', gasto);
+      backupGasto(gasto);
+    }
+    await cargarTodo();
+    const t = document.getElementById('toast-multi');
+    t.textContent = `✓ ${gastos.length} gasto${gastos.length!==1?'s':''} registrado${gastos.length!==1?'s':''} correctamente.`;
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), 3500);
+    // Resetear filas
+    document.getElementById('multi-rows').innerHTML = '';
+    document.getElementById('multi-cliente').value = '';
+    multiAgregarFila();
+    multiAgregarFila();
+    multiRowCount = 0;
+  } catch(e) { alert('Error al guardar: ' + e.message); }
+
+  btn.disabled = false; btn.textContent = 'Guardar todos los gastos';
 }
 
 // ─── DESCUENTOS ──────────────────────────────────────────────────────────────
