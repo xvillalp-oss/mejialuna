@@ -1033,7 +1033,7 @@ function renderCob() {
       const pk=`${c}|${m}`; const e=pagosMap[pk];
       const enviado = e?.enviado || false;
       const pagado  = e?.pagado || false;
-      const mesActual = new Date().toISOString().substring(0,7);
+      const mesActual = hoy().substring(0,7);
       const vencido = !pagado && m < mesActual;
 
       // Celda de Envío
@@ -1873,7 +1873,7 @@ function renderReembolsos() {
 
   // Mes seleccionado (default: mes actual)
   const selMes = document.getElementById('reemb-mes');
-  if (!selMes.value) selMes.value = new Date().toISOString().substring(0,7);
+  if (!selMes.value) selMes.value = hoy().substring(0,7);
   const mes = selMes.value;
 
   // Poblar selector de abogado con los autores que han registrado gastos
@@ -1979,7 +1979,7 @@ async function confirmarDescuento() {
 }
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
-function hoy(){return new Date().toISOString().split('T')[0];}
+function hoy(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function fmt(n){return(n||0).toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function fmtF(s){if(!s)return'';const p=String(s).substring(0,10).split('-');return p.length<3?s:`${p[2]}/${p[1]}/${p[0]}`;}
 function fmtMes(s){if(!s)return'';const[y,m]=s.split('-');return MESES[parseInt(m)-1]+' '+y;}
